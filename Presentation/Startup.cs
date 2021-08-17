@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 using NSwag;
 using Persistence;
 using Presentation.Filters.Filters;
@@ -88,6 +89,9 @@ namespace Presentation
             services.AddServerSideBlazor()
                     .AddCircuitOptions(options => options.DetailedErrors = true);
 
+            // GUI Framework
+            services.AddMudServices();
+            
             // Application Transients
             services.AddTransient<IServerDateTime, ServerDateTime>();
 
