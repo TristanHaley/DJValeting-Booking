@@ -20,7 +20,7 @@ namespace Persistence.Seeding
             var customers = FakerManager.CustomerFaker
                                         .RuleFor(customer => customer.Bookings,
                                                  _ => FakerManager.BookingFaker
-                                                                  .RuleFor(booking => booking, faker => faker.PickRandom(context.Bookings.ToList()))
+                                                                  .RuleFor(booking => booking.VehicleType, faker => faker.PickRandom(context.VehicleTypes.ToList()))
                                                                   .GenerateBetween(1, 2))
                                         .GenerateBetween(4, 8);
 

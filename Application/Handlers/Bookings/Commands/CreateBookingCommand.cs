@@ -10,7 +10,6 @@ namespace Application.Handlers.Bookings.Commands
         public string   CustomerContactNumber { get; set; }
         public string   CustomerEmail         { get; set; }
         public int      DateLeeway            { get; set; }
-        public bool     Notified              { get; set; }
         public DateTime PreferredDate         { get; set; }
         public int      VehicleType           { get; set; }
     }

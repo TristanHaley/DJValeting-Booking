@@ -7,10 +7,10 @@ namespace Persistence
     {
         protected override DjValetingContext CreateNewInstance(DbContextOptions<DjValetingContext> options)
         {
-            DjValetingContext urlShortenerContext = new(options);
-            urlShortenerContext.Database.EnsureCreated();
+            DjValetingContext djValetingContext = new(options);
+            djValetingContext.Database.EnsureCreated();
 
-            return urlShortenerContext;
+            return djValetingContext;
         }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistence;
+using Persistence.Seeding;
 using Serilog;
 
 namespace Presentation
@@ -26,12 +27,18 @@ namespace Presentation
 
             try
             {
-                var context = scope.ServiceProvider.GetService<DjValetingContext>();
+                var context        = scope.ServiceProvider.GetService<IDjValetingContext>();
+                var databaseSeeder = scope.ServiceProvider.GetService<ContextSeeder>();
 
-                logger.LogDebug("Attempting database migration");
+                // Perform migrations
+                // if ((await context.GetPendingMigrationsAsync()).Any())
+                // {
+                //     logger.LogDebug("Attempting database migration");
+                //     await context.MigrateAsync();
+                //     logger.LogDebug("Migration complete");
+                // }
 
-                await context.Database.MigrateAsync();
-                logger.LogDebug("Migration complete");
+                await databaseSeeder.SeedDatabase(context);
             }
             catch (Exception ex)
             {
