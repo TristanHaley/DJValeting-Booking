@@ -5,6 +5,7 @@ namespace Domain.Models
 {
     public class Booking
     {
+        public         int           BookingId     { get; set; }
         public         DateTime      PreferredDate { get; set; }
         public         int           DateLeeway    { get; set; }
         public virtual VehicleType   VehicleType   { get; set; }
