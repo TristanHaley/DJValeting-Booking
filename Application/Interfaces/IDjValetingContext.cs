@@ -12,9 +12,9 @@ namespace Application.Interfaces
         int SaveChanges(bool acceptAllChangesOnSuccess);
         
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Booking> Administrators { get; set; }
-        public DbSet<Booking> Customers { get; set; }
-        public DbSet<Booking> VehicleTypes { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<VehicleType> VehicleTypes { get; set; }
 
         public abstract Task<IDbContextTransaction> BeginTransactionAsync();
         
