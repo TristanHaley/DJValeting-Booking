@@ -1,0 +1,11 @@
+﻿@inherits BookingFormBase
+
+<MudCard>
+    <MudCardContent>
+        <MudForm @ref="@Form" @bind-isValid="@FormValid" @bind-Errors="@FormErrors">
+            <MudTextField T="string" Label="Firstname" @bind-Value="@Firstname" Required="true" RequiredError="Firstname is required!"/>
+            <MudTextField T="string" Label="Surname" @bind-Value="@Surname" Required="true" RequiredError="Surname is required!"/>
+            <MudNumericField Label="+/- Days Flexibility" @bind-Value="@Flexibility" Required="true" RequiredError="Flexibility is required (can be zero)!"></MudNumericField>
+        </MudForm>    
+    </MudCardContent>
+</MudCard>
