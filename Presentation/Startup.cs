@@ -5,6 +5,7 @@ using Application.Infrastructure;
 using Application.Infrastructure.AutoMapper;
 using Application.Interfaces;
 using DjValetingApi;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 using NSwag;
 using Persistence;
+using Persistence.Seeding;
 using Presentation.Filters.Filters;
 
 namespace Presentation
@@ -91,6 +93,9 @@ namespace Presentation
             services.AddServerSideBlazor()
                     .AddCircuitOptions(options => options.DetailedErrors = true);
 
+            // Database seeder(s)
+            services.AddTransient<ContextSeeder, DatabaseSeeder>();
+            
             // GUI Framework
             services.AddMudServices();
             
@@ -133,9 +138,8 @@ namespace Presentation
             // MVC
             services.AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                     .SetCompatibilityVersion(CompatibilityVersion.Latest)
-                    .AddViewLocalization();
-
-            //.AddFluentValidation(fluentValidate => fluentValidate.RegisterValidatorsFromAssemblyContaining<CreateUrlLookupCommandValidator>());
+                    .AddViewLocalization()
+                    .AddFluentValidation(fluentValidate => fluentValidate.RegisterValidatorsFromAssemblyContaining<CreateBookingCommandValidator>());
 
             // Swagger
             services.AddOpenApiDocument(document =>
