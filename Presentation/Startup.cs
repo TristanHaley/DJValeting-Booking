@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Application.Handlers.Bookings.Commands;
 using Application.Infrastructure;
 using Application.Infrastructure.AutoMapper;
@@ -10,25 +6,21 @@ using Application.Interfaces;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MudBlazor.Services;
 using NSwag;
 using Persistence;
-using Presentation.Data;
 using Presentation.Filters.Filters;
 
 namespace Presentation
 {
-     public class Startup
+    public class Startup
     {
         #region Constructors
 
@@ -59,7 +51,7 @@ namespace Presentation
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
             // NSwag / Swagger Setup
             const string specificationPath = "/api/specification.json";
             app.UseOpenApi(settings =>
@@ -95,29 +87,30 @@ namespace Presentation
             services.AddRazorPages();
             services.AddServerSideBlazor()
                     .AddCircuitOptions(options => options.DetailedErrors = true);
-            
+
             // Application Transients
             services.AddTransient<IServerDateTime, ServerDateTime>();
+
             // AddTransient password hashing service
-            
+
             // API Clients
             //services.AddHttpClient<IUrlLookupClient, UrlLookupClient>(client => client.BaseAddress = new Uri(Configuration["BaseUrl"]));
-            
+
             // Add MediatR
             services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-            
+
             // Cookies
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded    = _ => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             // AutoMapper
             services.AddAutoMapper(mapperConfig => mapperConfig.AddMaps(typeof(AutoMapperProfile)));
-            
+
             // Add DbContext using SQLite Provider
             services.AddDbContext<IDjValetingContext, DjValetingContext>(options =>
             {
@@ -130,13 +123,14 @@ namespace Presentation
 
             // Controllers
             services.AddControllersWithViews();
-            
+
             // MVC
             services.AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                     .SetCompatibilityVersion(CompatibilityVersion.Latest)
                     .AddViewLocalization();
-                    //.AddFluentValidation(fluentValidate => fluentValidate.RegisterValidatorsFromAssemblyContaining<CreateUrlLookupCommandValidator>());
-            
+
+            //.AddFluentValidation(fluentValidate => fluentValidate.RegisterValidatorsFromAssemblyContaining<CreateUrlLookupCommandValidator>());
+
             // Swagger
             services.AddOpenApiDocument(document =>
             {
@@ -149,7 +143,7 @@ namespace Presentation
                         Name  = "Tristan Haley",
                         Email = "TristanHaley071@gmail.com"
                     };
-                    
+
                     post.Info.Version     = "v1";
                     post.Info.Description = "RESTful API definitions for DJ Valeting";
                 };
