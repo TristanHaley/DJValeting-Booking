@@ -1,8 +1,10 @@
+using System;
 using System.Reflection;
 using Application.Handlers.Bookings.Commands;
 using Application.Infrastructure;
 using Application.Infrastructure.AutoMapper;
 using Application.Interfaces;
+using DjValetingApi;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -98,7 +100,7 @@ namespace Presentation
             // AddTransient password hashing service
 
             // API Clients
-            //services.AddHttpClient<IUrlLookupClient, UrlLookupClient>(client => client.BaseAddress = new Uri(Configuration["BaseUrl"]));
+            services.AddHttpClient<IBookingClient, BookingClient>(client => client.BaseAddress = new Uri(Configuration["BaseUrl"]));
 
             // Add MediatR
             services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
