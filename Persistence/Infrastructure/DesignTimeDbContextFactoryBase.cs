@@ -10,7 +10,7 @@ namespace Persistence.Infrastructure
         where TDbContext : DbContext
     {
         private const string asp_net_core_environment = "ASPNETCORE_ENVIRONMENT";
-        private const string connection_string_name   = "UrlShortenerConnection";
+        private const string connection_string_name   = "DjValetingConnection";
 
         public TDbContext CreateDbContext(string[] args)
         {
