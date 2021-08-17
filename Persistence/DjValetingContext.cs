@@ -11,9 +11,9 @@ namespace Persistence
         public DjValetingContext(DbContextOptions<DjValetingContext> options) : base(options){}
         
         public DbSet<Booking>        Bookings           { get; set; }
-        public DbSet<Booking>        Administrators     { get; set; }
-        public DbSet<Booking>        Customers          { get; set; }
-        public DbSet<Booking>        VehicleTypes       { get; set; }
+        public DbSet<Administrator>        Administrators     { get; set; }
+        public DbSet<Customer>        Customers          { get; set; }
+        public DbSet<VehicleType>        VehicleTypes       { get; set; }
         public Task<IDbContextTransaction> BeginTransactionAsync()
         {
             return Database.BeginTransactionAsync();
