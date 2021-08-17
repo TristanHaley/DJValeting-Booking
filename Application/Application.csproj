@@ -17,4 +17,12 @@
       <PackageReference Include="Simple.AES" Version="2.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Handlers\Administrators\Queries" />
+      <Folder Include="Handlers\Customers\Commands" />
+      <Folder Include="Handlers\Customers\Queries" />
+      <Folder Include="Handlers\VehicleTypes\Commands" />
+      <Folder Include="Handlers\VehicleTypes\Queries" />
+    </ItemGroup>
+
 </Project>
