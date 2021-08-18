@@ -1,11 +1,26 @@
-﻿@inherits BookingFormBase
+﻿@using InputType = MudBlazor.InputType
+@inherits BookingFormBase
 
 <MudCard>
     <MudCardContent>
+        <MudText Typo="Typo.h6">Create a Booking</MudText>
         <MudForm @ref="@Form" @bind-isValid="@FormValid" @bind-Errors="@FormErrors">
             <MudTextField T="string" Label="Firstname" @bind-Value="@Firstname" Required="true" RequiredError="Firstname is required!"/>
             <MudTextField T="string" Label="Surname" @bind-Value="@Surname" Required="true" RequiredError="Surname is required!"/>
-            <MudNumericField Label="+/- Days Flexibility" @bind-Value="@Flexibility" Required="true" RequiredError="Flexibility is required (can be zero)!"></MudNumericField>
-        </MudForm>    
+            <MudTextField T="string" Label="Email" @bind-Text="@Email" Required="true" InputType="InputType.Email"/>
+            <MudTextField T="string" Label="Number" @bind-Text="@Number" Required="true" InputType="InputType.Telephone"/>
+            <MudDatePicker Label="When" @bind-Date="@When" Required="true" RequiredError="When is required!"/>
+            <MudNumericField Label="+/- Days Flexibility" @bind-Value="@Flexibility" Min="0" Max="3" Required="true" RequiredError="Flexibility is required (can be zero)!"/>
+            <MudSelect Label="Vehicle Type" Required="true" RequiredError="Vehicle type is required!" @bind-Value="@VehicleType">
+                <!-- TODO: Populate from API -->
+                <MudSelectItem T="int" Value="1">Small</MudSelectItem>
+                <MudSelectItem T="int" Value="2">Medium</MudSelectItem>
+                <MudSelectItem T="int" Value="3">Large</MudSelectItem>
+                <MudSelectItem T="int" Value="4">Van</MudSelectItem>
+            </MudSelect>
+        </MudForm>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!FormValid)">Submit</MudButton>
+        </MudCardActions>
     </MudCardContent>
 </MudCard>
