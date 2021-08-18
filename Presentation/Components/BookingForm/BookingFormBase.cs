@@ -11,6 +11,7 @@ namespace Presentation.Components.BookingForm
     {
         public BookingFormBase()
         {
+            BookingSubmittedSuccessfully = null;
             BookingCommand = new CreateBookingCommand
             {
                 VehicleType = 1
@@ -31,6 +32,7 @@ namespace Presentation.Components.BookingForm
         [Inject] private IServerDateTime          ServerDateTime { get; set; } 
         [Inject] private ILogger<BookingFormBase> Logger         { get; set; }
         [Inject] private IBookingClient           BookingClient  { get; set; }
+        protected        bool?                    BookingSubmittedSuccessfully  { get; set; }
 
         protected string ValidateName(string arg)
         {
@@ -44,10 +46,12 @@ namespace Presentation.Components.BookingForm
             try
             {
                 var result = await BookingClient.CreateAsync(BookingCommand);
+                BookingSubmittedSuccessfully = true;
                 Logger.LogDebug("Booking create finished with code: {StatusCode}", result.StatusCode);
             }
             catch (Exception ex)
             {
+                BookingSubmittedSuccessfully = false;
                 Logger.LogError(ex, "Failed to submit booking");
             }
         }

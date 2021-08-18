@@ -2,27 +2,45 @@
 @using System.ComponentModel.DataAnnotations
 @inherits BookingFormBase
 
-<MudCard>
-    <MudCardContent>
-        <MudText Typo="Typo.h6">Create a Booking</MudText>
-        <EditForm Model="@BookingCommand" OnValidSubmit="@(SubmitBookingAsync)">
+<EditForm Model="@BookingCommand" OnValidSubmit="@(SubmitBookingAsync)">
+    <MudCard>
+        <MudCardContent>
+            <MudText Typo="Typo.h6">Create a Booking</MudText>
             <DataAnnotationsValidator/>
-            <MudTextField T="string" Label="Firstname" For="@(() => BookingCommand.CustomerFirstName)"  Required="true" RequiredError="Your firstname is required!" Validation="@(new Func<string, string>(ValidateName))"/>
-            <MudTextField T="string" Label="Surname" For="@(() => BookingCommand.CustomerSurname)" Required="true" RequiredError="Your surname is required!" Validation="@(new Func<string, string>(ValidateName))"/>
-            <MudTextField T="string" Label="Email" For="@(() => BookingCommand.CustomerEmail)" Required="true" RequiredError="A contact email is required!" InputType="InputType.Email" Validation="@(new EmailAddressAttribute{ErrorMessage = "Email address is invalid!"})"/>
-            <MudTextField T="string" Label="Number" For="@(() => BookingCommand.CustomerContactNumber)" Required="true" RequiredError="A contact number is required!" InputType="InputType.Telephone" Validation="@(new PhoneAttribute{ErrorMessage = "Phone number is invalid!"})"/>
+            <MudTextField T="string" Label="Firstname" @bind-Value="@BookingCommand.CustomerFirstName" For="@(() => BookingCommand.CustomerFirstName)"  Required="true" RequiredError="Your firstname is required!" Validation="@(new Func<string, string>(ValidateName))"/>
+            <MudTextField T="string" Label="Surname" @bind-Value="@BookingCommand.CustomerSurname" For="@(() => BookingCommand.CustomerSurname)" Required="true" RequiredError="Your surname is required!" Validation="@(new Func<string, string>(ValidateName))"/>
+            <MudTextField T="string" Label="Email" @bind-Value="@BookingCommand.CustomerEmail" For="@(() => BookingCommand.CustomerEmail)" Required="true" RequiredError="A contact email is required!" InputType="InputType.Email" Validation="@(new EmailAddressAttribute{ErrorMessage = "Email address is invalid!"})"/>
+            <MudTextField T="string" Label="Number" @bind-Value="@BookingCommand.CustomerContactNumber" For="@(() => BookingCommand.CustomerContactNumber)" Required="true" RequiredError="A contact number is required!" InputType="InputType.Telephone" Validation="@(new PhoneAttribute{ErrorMessage = "Phone number is invalid!"})"/>
             <MudDatePicker Label="When" Editable="true" @bind-Date="@FormDateTime" Required="true" RequiredError="When is required!" Validation="@(new Func<DateTime, string>(ValidateDateIsInFuture))" HelperText="Select a date in the future"/>
-            <MudNumericField Label="+/- Days Flexibility" For="@(() => BookingCommand.DateLeeway)" Min="0" Max="3" Required="true" RequiredError="Flexibility is required (can be zero)!"/>
-            <MudSelect T="int?" Label="Vehicle Type" Required="true" For="@(() => BookingCommand.VehicleType)" RequiredError="Vehicle type is required!">
+            <MudNumericField Label="+/- Days Flexibility" @bind-Value="@BookingCommand.DateLeeway" For="@(() => BookingCommand.DateLeeway)" Min="0" Max="3" Required="true" RequiredError="Flexibility is required (can be zero)!"/>
+            <MudSelect T="int?" Label="Vehicle Type" Required="true" @bind-Value="@BookingCommand.VehicleType" For="@(() => BookingCommand.VehicleType)" RequiredError="Vehicle type is required!">
                 <MudSelectItem T="int?" Value="1">Small</MudSelectItem>
                 <MudSelectItem T="int?" Value="2">Medium</MudSelectItem>
                 <MudSelectItem T="int?" Value="3">Large</MudSelectItem>
                 <MudSelectItem T="int?" Value="4">Van</MudSelectItem>
                 <!-- TODO: Populate from API -->
             </MudSelect>
-        </EditForm>
+            <ValidationSummary/>
+            
+            @if (BookingSubmittedSuccessfully != null)
+            {
+                if (BookingSubmittedSuccessfully == true)
+                {
+                    <MudAlert Severity="Severity.Success">
+                        <MudText Typo="Typo.body1">Booking submitted!</MudText>
+                    </MudAlert>
+                }
+                else
+                {
+                    <MudAlert Severity="Severity.Error">
+                        <MudText Typo="Typo.body1">Booking failed to submit</MudText>
+                    </MudAlert>
+                }
+            }
+            
+        </MudCardContent>
         <MudCardActions>
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" class="ml-auto">Submit</MudButton>
         </MudCardActions>
-    </MudCardContent>
-</MudCard>
+    </MudCard>
+</EditForm>
