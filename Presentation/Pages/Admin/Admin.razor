@@ -1,0 +1,69 @@
+﻿@page "/Admin"
+@using DjValetingApi
+@using Microsoft.EntityFrameworkCore.Storage.ValueConversion
+@inherits AdminBase
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h4">Administrators</MudText>
+    </MudItem>
+    
+    @if (BookingList?.Bookings?.Any() == true)
+    {
+        <MudItem xs="12">
+            <MudTable Items="@BookingList.Bookings" Dense="true" CanCancelEdit="true">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Bookings</MudText>
+                    <MudSpacer/>
+                </ToolBarContent>
+                <ColGroup>
+                    <col style=""/>
+                    <col style=""/>
+                    <col style=""/>
+                    <col style=""/>
+                    <col style=""/>
+                    <col style=""/>
+                    <col style=""/>
+                </ColGroup>
+                <HeaderContent>
+                    <MudTh>
+                        <MudTableSortLabel SortBy="@(new Func<BookingLookupModel, object>(x => x.CustomerName))"></MudTableSortLabel>Name</MudTh>
+                    <MudTh>Number</MudTh>
+                    <MudTh>
+                        <MudTableSortLabel SortBy="@(new Func<BookingLookupModel, object>(x => x.CustomerEmail))"></MudTableSortLabel>Email</MudTh>
+                    <MudTh>
+                        <MudTableSortLabel SortBy="@(new Func<BookingLookupModel, object>(x => x.VehicleType))"></MudTableSortLabel>Vehicle Type</MudTh>
+                    <MudTh>
+                        <MudTableSortLabel SortBy="@(new Func<BookingLookupModel, object>(x => x.SelectedDateTime))"></MudTableSortLabel>Date Time</MudTh>
+                    <MudTh>Leeway</MudTh>
+                    <MudTh>
+                        <MudTableSortLabel SortBy="@(new Func<BookingLookupModel, object>(x => x.HasBeenNotified))"></MudTableSortLabel>Has been notified?</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Name">@context.CustomerName</MudTd>
+                    <MudTd DataLabel="Number">@context.CustomerNumber</MudTd>
+                    <MudTd DataLabel="Email">@context.CustomerEmail</MudTd>
+                    <MudTd DataLabel="Vehicle Type">@context.VehicleType</MudTd>
+                    <MudTd DataLabel="Preferred Date">@context.SelectedDateTime</MudTd>
+                    <MudTd DataLabel="Leeway">@context.Leeway</MudTd>
+                    <MudTd DataLabel="Has been notified?">@context.HasBeenNotified</MudTd>
+                </RowTemplate>
+                @* <RowEditingTemplate> *@
+                @*     <MudTd DataLabel="">@</MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @*     <MudTd DataLabel=""></MudTd> *@
+                @* </RowEditingTemplate> *@
+            </MudTable>
+        </MudItem>
+    }
+    else
+    {
+        <div class="alert-warning">
+            <p>No bookings found</p>
+        </div>
+    }
+</MudGrid>
