@@ -1,2 +1,14 @@
 @page "/"
+@using Presentation.Components.BookingForm
 
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudText Typo="Typo.h2">DJ Valeting</MudText>
+            <MudText Typo="Typo.caption">Cleaning your vehicle <em>car-fully</em> since 17/08/2021</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <BookingForm/>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

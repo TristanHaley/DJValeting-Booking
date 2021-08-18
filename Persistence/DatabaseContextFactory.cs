@@ -8,7 +8,7 @@ namespace Persistence
         protected override DjValetingContext CreateNewInstance(DbContextOptions<DjValetingContext> options)
         {
             DjValetingContext djValetingContext = new(options);
-            djValetingContext.Database.EnsureCreated();
+            djValetingContext.Database.Migrate();
 
             return djValetingContext;
         }
